@@ -1,0 +1,11 @@
+{% extends 'TheApp/base.html' %}
+{% block body_block %}
+
+
+                <div>
+                    {% for c in categories %}
+                        <li><a >{{ c.name }}</a></li>
+                    {% endfor %}
+    </div>
+
+{% endblock %}

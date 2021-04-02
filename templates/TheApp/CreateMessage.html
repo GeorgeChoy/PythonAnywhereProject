@@ -1,0 +1,26 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+<body></body>
+{% block body_block %}
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+
+
+<h1>Create message</h1>
+<form action="" method="post">
+    {% csrf_token %}
+<div >
+    {{ form.as_ul }}
+    </div>
+<input type="submit" value="OK">
+</form>
+                <div>
+                    {% for m in messages %}
+                        <li><a >{{ m.name }} on  {{ m.date }} wrote</a></li>
+                        <p>{{ m.text }} </p>
+                    {% endfor %}
+    </div>
+    <div id="like_button_container"></div>
+    <script  src="{% static "js/react/like_button.js" %}"></script>
+{% endblock %}
+</body>

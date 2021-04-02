@@ -1,0 +1,17 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+{% block body_block %}
+    <a href="http://jquery.com/"></a>
+
+<script type="text/javascript" src="{% static 'js/category_like.js' %}"></script>
+
+    <div>
+        {% if category %}
+        <h1>{{ category.name }} {{ category.required }}</h1>
+        <p id="like_count">{{ category.likes }}</p> people like this category
+            <button id="likes" data-catid="{{category.id}}" class="btn btn-primary btn-sm" type="button">like</button>
+        {% else %}
+            The category does not exist
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+<html>
+{% block body_block %}
+<script type = "text/javascript"  src="{% static "js/isLetter.js" %}"></script>
+<script type = "text/javascript"  src="{% static "js/SetUpResult.js" %}"></script>
+<script type = "text/javascript"  src="{% static "js/GuessTheFilm.js" %}"></script>
+<style>
+var {
+  display: none;
+}
+</style>
+<h3>Guess the film</h3>
+<var id="myfilm" type="hidden">{{ film }}</var>
+
+<form >
+  <input type="text" id="letter" name="letter" maxlength="1" label="letter"><br>letter<br>
+  <input type="submit"  id="letters" value="Submit"  >
+</form>
+<input id="demo" readonly/> <input type="text" id="NoOfGoes"  value="12" readonly> attempts left</input>
+
+{% endblock %}
+</html>

@@ -1,0 +1,16 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Enigma  JS version
+{% endblock %}
+
+{% block body_block %}
+<script type="text/javascript" src="{% static 'js/enigma_ajax.js' %}"></script>
+
+Config: <input type="text" id="config" value="">
+Text to encrypt/decrypt: <input type="text" id="input_text" value="">
+<button id="enigma" type="button">encrypt/decrypt</button>
+<p id="output"></p>
+
+{% endblock %}

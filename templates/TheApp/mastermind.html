@@ -1,0 +1,24 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+<html>
+<body>
+{% block body_block %}
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="{% static "js/random_array.js" %}"></script>
+    <script src="{% static "js/SetupCombination.js" %}"></script>
+    <script src="{% static "js/mastermind.js" %}"></script>
+<select class="selector"  ></select>
+<select class="selector"  ></select>
+<select class="selector"  ></select>
+<select class="selector"  ></select>
+
+
+<button type="button" id="demo" >submit letter</button>
+<input type="text" id="NoOfGoes"  value="12" readonly> attempts left</input>
+
+       <div class="message"></div>
+{% endblock %}
+</body>
+      </html>

@@ -1,0 +1,14 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    film genre list
+{% endblock %}
+
+{% block body_block %}
+    <p><a href="{% url 'TheApp:index' %}">cancel</a></p>
+    {% for f in filmgenre_list %}
+    <h2><a href="{% url 'TheApp:UpdateFilmGenre' f.slug %}">{{ f.name }} </a>
+        </h2>
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,11 @@
+{% extends 'TheApp/base.html' %}
+{% block body_block %}
+
+
+                <div>
+                    {% for s in sessions %}
+                        <li><a >{{ s.session_key }}</a></li>
+                    {% endfor %}
+    </div>
+
+{% endblock %}

@@ -1,0 +1,16 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+
+{% block body_block %}
+    <ul>{{ my_favorite_categories.name}}   </ul>
+         {% if  category_search_results.count > 0 %}
+            </p>
+            <ul>
+               {% for  c in category_search_results %}
+                  <li>{{ c.name }}</li>
+               {% endfor %}
+            </ul>
+         {% else %}
+            <i>No results</i></p>
+         {% endif %}
+{% endblock %}

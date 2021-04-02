@@ -1,0 +1,12 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+{% block body_block %}
+<h1>Create/edit film</h1>
+<form action="" method="post">
+    {% csrf_token %}
+<div >
+    {{ form.as_ul }}
+    </div>
+<input type="submit" value="OK">
+</form>
+{% endblock %}

@@ -1,0 +1,15 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Enigma non JS version
+{% endblock %}
+
+{% block body_block %}
+<form action="." method="post">
+    {% csrf_token %}
+
+{{ form }}
+<input type="submit" id="submit" >submit  </input>
+</form>
+{% endblock %}

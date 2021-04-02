@@ -1,0 +1,58 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Create/Update product, stock levels and price
+{% endblock %}
+
+{% block body_block %}
+
+<form method="post" action="" enctype="multipart/form-data">
+         {% csrf_token %}
+    <table>
+      {{ form }}
+    </table>
+	  {{ qty_formset.management_form  }}
+<div id="form_set">
+    {% for f in qty_formset.forms %}
+        <table class='no_error'>
+            {{ f.as_table }}
+        </table>
+    {% endfor %}
+</div>
+	  {{ price_formset.management_form  }}
+<div id="price_form_set">
+    {% for i in price_formset.forms %}
+        <table class='no_error'>
+            {{ i.as_table }}
+
+        </table>
+    {% endfor %}
+</div>
+
+<input type="button" value="Add More product prices" id="add_more_product_price">
+<div id="empty_form" style="display:none">
+    <table class='no_error'>
+        {{ price_formset.empty_form.as_table }}
+    </table>
+</div>
+
+        <input type="submit"/>
+    </form>
+<script>
+    $('#add_more_product_price').click(function() {
+        var form_idx = $('#id_productprice_set-TOTAL_FORMS').val();
+        var str1 = "id_productprice_set-";
+        var n=parseInt(form_idx) ;
+        str1=str1.concat(n.toString());
+        str1=str1.concat("-price");
+        $('#price_form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+        document.getElementById(str1).value = 0.00;
+        $('#id_productprice_set-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+        $('#id_productprice_set-MAX_NUM_FORMS').val(1000);
+    });
+
+
+</script>
+
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+<html>
+<body>
+{% block body_block %}
+    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css" rel = "stylesheet">
+      <script src = "https://code.jquery.com/jquery-1.10.2.js"></script>
+      <script src = "https://code.jquery.com/ui/1.10.4/jquery-ui.js"></script>
+    <script src="{% static "js/random_array.js" %}"></script>
+    <script src="{% static "js/mastermind_input_array.js" %}"></script>
+    <script src="{% static "js/SetupCombination.js" %}"></script>
+    <script src="{% static "js/mastermind_radioButton.js" %}"></script>
+
+  <label for="a">a: </label> <input type="radio" id="a" name="first" value="a" checked>
+  <label for="a">a: </label> <input type="radio" id="a" name="second" value="a" checked>
+  <label for="a">a: </label> <input type="radio" id="a" name="third" value="a" checked>
+  <label for="a">a: </label> <input type="radio" id="a" name="fourth" value="a" checked>
+  <br>
+  <label for="b">b: </label> <input type="radio" id="b" name="first" value="b">
+  <label for="b">b: </label> <input type="radio" id="b" name="second" value="b">
+  <label for="b">b: </label> <input type="radio" id="b" name="third" value="b">
+  <label for="b">b: </label> <input type="radio" id="b" name="fourth" value="b">
+  <br>
+  <label for="c">c: </label> <input type="radio" id="c" name="first" value="c">
+  <label for="c">c: </label> <input type="radio" id="c" name="second" value="c">
+  <label for="c">c: </label> <input type="radio" id="c" name="third" value="c">
+  <label for="c">c: </label> <input type="radio" id="c" name="fourth" value="c">
+  <br>
+  <label for="d">d: </label> <input type="radio" id="d" name="first" value="d">
+  <label for="d">d: </label> <input type="radio" id="d" name="second" value="d">
+  <label for="d">d: </label> <input type="radio" id="d" name="third" value="d">
+  <label for="d">d: </label> <input type="radio" id="d" name="fourth" value="d">
+  <br>
+  <label for="e">e: </label> <input type="radio" id="e" name="first" value="e">
+  <label for="e">e: </label> <input type="radio" id="e" name="second" value="e">
+  <label for="e">e: </label> <input type="radio" id="e" name="third" value="e">
+  <label for="e">e: </label> <input type="radio" id="e" name="fourth" value="e">
+  <br>
+  <label for="f">f: </label> <input type="radio" id="f" name="first" value="f">
+  <label for="f">f: </label> <input type="radio" id="f" name="second" value="f">
+  <label for="f">f: </label> <input type="radio" id="f" name="third" value="f">
+  <label for="f">f: </label> <input type="radio" id="f" name="fourth" value="f">
+  <br>
+<button type="button" id="demo" >submit letter</button>
+<input type="text" id="NoOfGoes"  value="12" readonly> attempts left</input>
+
+       <div class="message"></div>
+{% endblock %}
+</body>
+      </html>

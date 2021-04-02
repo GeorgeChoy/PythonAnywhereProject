@@ -1,0 +1,40 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+<body></body>
+{% block body_block %}
+
+
+<h1>Update Cart Line</h1>
+<form action="" method="post">
+    {% csrf_token %}
+
+
+	  {{ formset.management_form  }}
+<div id="formset">
+    {% for i in formset.forms %}
+        <table class='no_error'>
+  {% if forloop.first %}
+  <thead><tr>
+    {% for field in i.visible_fields %}
+    <th>{{ field.label|capfirst }}</th>
+    {% endfor %}
+  </tr></thead>
+  {% endif %}
+
+    {% for field in i.visible_fields %}
+      <td>
+       <table>
+        <tr><td>{{ field }}</td></tr>
+       </table>
+      </td>
+    {% endfor %}
+
+        </table>
+    {% endfor %}
+</div>
+<input type="submit" value="OK">
+</form>
+
+
+{% endblock %}
+</body>

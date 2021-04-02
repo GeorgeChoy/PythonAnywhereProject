@@ -1,0 +1,12 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+{% block body_block %}
+    <a href="http://jquery.com/"></a>
+    <div>
+        {% if film %}
+            <h1>{{ film.name }}</h1>
+        {% else %}
+            The film does not exist
+        {% endif %}
+    </div>
+{% endblock %}
