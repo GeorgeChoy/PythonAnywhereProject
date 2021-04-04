@@ -12,8 +12,11 @@ https://docs.djangoproject.com/en/3.1/ref/settings/
 
 from pathlib import Path
 from django.core.exceptions import ImproperlyConfigured
+import environ
 
 import os
+env = environ.Env()
+environ.Env.read_env()
 ###get the environment level config from the .env file on the project directory
 def get_env_value(env_variable):
     try:
@@ -33,7 +36,8 @@ TEMPLATE_DIR=os.path.join(BASE_DIR,'templates')
 
 # SECURITY WARNING: keep the secret key used in production secret!
 #SECRET_KEY = 'kut0yts6b2jav+*3@u2h1st+!)5j_2g!8nsw$cb^626zs%5mwy'
-SECRET_KEY = get_env_value('SECRET_KEY')
+
+SECRET_KEY = env('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -90,17 +94,21 @@ WSGI_APPLICATION = 'myproj.wsgi.application'
 
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
+if get_env_value('DATABASE_NAME')=='sqlite':
+    DATABASE_NAME=os.path.join(BASE_DIR, 'db.sqlite3')
+else:
+    DATABASE_NAME=env('DATABASE_NAME')
 
 DATABASES = {
     'default': {
         #'ENGINE': 'django.db.backends.sqlite3',
         #'NAME': BASE_DIR / 'db.sqlite3',
 
-        'ENGINE': get_env_value('DATABASE_ENGINE'),
-        'NAME': get_env_value('DATABASE_NAME'),
-        'HOST': get_env_value('DATABASE_HOST'),
-        'USER': get_env_value('DATABASE_USER'),
-        'PASSWORD': get_env_value('DATABASE_PASSWORD'),
+        'ENGINE': env('DATABASE_ENGINE'),
+        'NAME': DATABASE_NAME,
+        'HOST': env('DATABASE_HOST'),
+        'USER': env('DATABASE_USER'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
 
         #'NAME': 'georgeChoy$default',
         #'USER': 'georgeChoy',
