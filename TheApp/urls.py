@@ -8,6 +8,7 @@ from django.conf import settings
 
 urlpatterns=[
     url(r'^$',  views.index,name='index'),
+    url(r'^index/$', views.index,name='index'),
     url(r'^about/$', views.about,name='about'),
     url(r'^CreateCategory/$', CreateCategoryView.as_view(),name='CreateCategory'),
     url(r'^category/(?P<cslug>[\w\-]+)/$', views.show_category, name='show_category'),
@@ -44,6 +45,7 @@ urlpatterns=[
     url(r'^ProductStockPriceCreate3/$', ProductStockPriceCreate3.as_view(),name='ProductStockPriceCreate3'),
     url(r'^ProductStockPriceUpdate/(?P<pk>\d+)/$', ProductStockPriceUpdate.as_view(),name='ProductStockPriceUpdate'),
     url(r'^ProductStockPriceUpdate2/(?P<pk>\d+)/$', ProductStockPriceUpdate2.as_view(),name='ProductStockPriceUpdate2'),
+    url(r'^ProductStockPriceUpdate3/(?P<pk>\d+)/$', ProductStockPriceUpdate3.as_view(),name='ProductStockPriceUpdate3'),
     url(r'^ProductList/$', ProductList.as_view(),name='ProductList'),
     url(r'^ProductListReadOnly/$', ProductListReadOnly.as_view(),name='ProductListReadOnly'),
     url(r'^ProductListAddToCart/$', ProductListAddToCart.as_view(),name='ProductListAddToCart'),
@@ -54,4 +56,18 @@ urlpatterns=[
     url(r'^UpdateCartLine/(?P<pk>\d+)/$', UpdateCartLine.as_view(),name='UpdateCartLine'),
     url(r'^UpdateCartLine2/(?P<pk>\d+)/$', UpdateCartLine2.as_view(),name='UpdateCartLine2'),
     url(r'^UpdateCartHeader/(?P<pk>\d+)/$', UpdateCartHeader.as_view(),name='UpdateCartHeader'),
-    ]
+    url(r'^CreateConfig/$', CreateConfig.as_view(), name='CreateConfig'),
+    url(r'^UpdateConfig/(?P<slug>[\w\-]+)/$', UpdateConfig.as_view(), name='UpdateConfig'),
+    url(r'^CreateOrEditOrder/$', views.CreateOrEditOrder, name='CreateOrEditOrder'),
+    url(r'^OrderDetail/(?P<pk>\d+)/$', OrderDetail.as_view(),name='OrderDetail'),
+    url(r'^OrderListView/$', OrderListView.as_view(), name='OrderListView'),
+    url(r'^UpdateOrderLine/(?P<pk>\d+)/$', UpdateOrderLine.as_view(),name='UpdateOrderLine'),
+    url(r'^CreateMenuItems/$', CreateMenuItems.as_view(), name='CreateMenuItems'),
+    url(r'^MenuItemsEditView/$', MenuItemsEditView.as_view(), name='MenuItemsEditView'),
+    url(r'^get_Topbar/$', views.get_Topbar,name='get_Topbar'),
+    url(r'^ConfigListView/$', ConfigListView.as_view(), name='ConfigListView'),
+    url(r'^UpdateConfig/(?P<pk>\d+)/$', UpdateConfig.as_view(),name='UpdateConfig'),
+    url(r'^MessageDetail/(?P<pk>\d+)/$', MessageDetail.as_view(),name='MessageDetail'),
+    url(r'^ListMessage/$', ListMessage.as_view(), name='ListMessage'),
+    url(r'^Category_list_react/$', views.Category_list_react,name='Category_list_react'),
+]

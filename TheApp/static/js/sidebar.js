@@ -1,8 +1,11 @@
 $(document).ready(function(){
-
-        var $sidemenuOptions = $('#sidemenu');
+        var $sidemenuOptions = $('.sidenav');
         $sidemenuOptions.empty();
-          $.ajax({
+        $('.side').empty();
+        var urlprotocol=String(window.location.protocol);
+        var urlheader=String(window.location.host);
+
+         $.ajax({
         url: '/TheApp/get_menuitems/',
         dataType: 'json',
         type : 'GET',
@@ -11,23 +14,22 @@ $(document).ready(function(){
         {
             var options =[];
             $.each(data, function(key, val){
+
                 if (!val.authenticated_only )
                 {
                     if (val.name.match(/user login/g) || val.name.match(/register/g))
                     {
                         if(!val.auth_flag)
                         {
-                            $sidemenuOptions.append($('<a id="side" href="http://georgechoy.pythonanywhere.com/'+val.app+'/'+ val.url +'">' + val.name + '</a>'));
+                            $sidemenuOptions.append($('<a id="side" class="side" href="'+urlprotocol+'//'+urlheader+'/'+val.app+'/' +val.url +'">' + val.name + '</a>'));
                         }
                      }
-                     else
-                     {
-                        $sidemenuOptions.append($('<a id="side" href="http://georgechoy.pythonanywhere.com/'+val.app+'/'+ val.url +'">' + val.name + '</a>'));
-                     }
+
                 }
                 else if(val.auth_flag)
                 {
-                         $sidemenuOptions.append($('<a id="side" href="http://georgechoy.pythonanywhere.com/'+val.app+'/'+ val.url +'">' + val.name + '</a>'));
+                         if (val.name.match(/user logout/g) )
+                         $sidemenuOptions.append($('<a id="side" class="side" href="'+urlprotocol+'//'+urlheader+'/'+val.app+'/'+ val.url +'">' + val.name + '</a>'));
                 }
 
             });

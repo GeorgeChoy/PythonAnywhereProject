@@ -1,0 +1,16 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+<body></body>
+{% block body_block %}
+
+<h1>Create menu items</h1>
+<form action="" method="post">
+    {% csrf_token %}
+<div >
+    {{ form.as_ul }}
+    </div>
+<input type="submit" value="OK">
+</form>
+
+{% endblock %}
+</body>

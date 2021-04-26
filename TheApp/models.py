@@ -50,8 +50,9 @@ class MenuItems(models.Model):
     name=models.CharField(max_length=128,unique=True)
     slug=models.SlugField(unique=True)
     url=models.CharField(max_length=128,unique=True)
-    app = models.CharField(max_length=128)
+    app = models.CharField(max_length=128,default='TheApp')
     authenticated_only=models.BooleanField(default=True)
+    topbar_option= models.CharField(max_length=128,default='')
     def save(self,*args,**kwargs):
         self.slug=slugify(self.name)
         super(MenuItems,self).save(*args,**kwargs)
@@ -140,8 +141,7 @@ class Order(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     create_date=models.DateField(default=timezone.now)
     delivery_date=models.DateField(null=True)
-    def __str__(self):
-        return self.pk
+
 
 class OrderProduct(models.Model):
     order= models.ForeignKey(Order, on_delete=models.CASCADE)
@@ -149,8 +149,8 @@ class OrderProduct(models.Model):
     order_qty=models.IntegerField(default=0)
     order_delivered_qty=models.IntegerField(default=0)
     order_product_price=models.DecimalField(default=0.00, max_digits=5, decimal_places=2)
-    def __str__(self):
-        return self.order+self.product
+    create_date = models.DateField(default=timezone.now)
+
 
 class CartHeader(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
@@ -161,7 +161,6 @@ class CartLine(models.Model):
     product=models.ForeignKey(Product, on_delete=models.CASCADE)
     order_qty=models.IntegerField(default=0)
     order_product_price=models.DecimalField(default=0.00, max_digits=5, decimal_places=2)
-
 
 class Album(models.Model):
     title = models.CharField(max_length=100)
@@ -179,3 +178,13 @@ class Track(models.Model):
     def __str__(self):
         return "%s - %s" %( self.number, self.name)
 
+class Config(models.Model):
+    name = models.CharField(max_length=100)
+    detail = models.TextField(max_length=5000)
+    slug=models.SlugField(unique=True,default="")
+
+    def save(self,*args,**kwargs):
+        self.slug=slugify(self.name)
+        super(Config,self).save(*args,**kwargs)
+    def __str__(self):
+        return self.name

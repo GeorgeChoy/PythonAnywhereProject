@@ -1,13 +1,9 @@
 {% extends 'TheApp/base.html' %}
 {% load static %}
-<body></body>
-{% block body_block %}
-<script src="{% static "js/AddToOrder.js" %}"></script>
 
-<h1>Update Cart Line</h1>
-<form action="" method="post">
-    {% csrf_token %}
-	  {{ formset.management_form  }}
+{% block body_block %}
+<form action="" method="post" enctype="multipart/form-data">{% csrf_token %}
+        {{ formset.management_form }}
 <div id="form_set">
 <table id="formset" class="form">
 {% for form in formset.forms %}
@@ -35,10 +31,7 @@
 {% endfor %}
 </table>
 </div>
-<input type="submit" value="OK">
-
+        <input type="submit" formnovalidate name="save" value="save and exit">
 </form>
-<a id="OrderAdd"  class="btn btn-primary btn-sm" ><button id="AddToOrder"  >Add to order</button></a>
-
+<a href="{% url 'index' %}">Cancel</a>
 {% endblock %}
-</body>

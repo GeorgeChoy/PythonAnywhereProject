@@ -1,14 +1,16 @@
 $( document ).ready(function() {
+    var urlprotocol=String(window.location.protocol);
+    var urlheader=String(window.location.host);
+    var app='TheApp';
+    var cartTotal=0
     $('.AddToCart').click(function(){
         var prodid;
         prodid = $(this).attr("data-prodid");
         $('#editcartbutton').prop('disabled', false);
-        $.get('/TheApp/AddToCart/', {product_id: prodid}, function(data){
-                   $('#cartTotal').html(data);
-        });
 
         $.ajax({
-        url: '/TheApp/GetCartTotal/',
+        url: '/TheApp/AddToCart/',
+        data:{product_id: prodid},
         dataType: 'json',
         type : 'GET',
 
@@ -23,13 +25,11 @@ $( document ).ready(function() {
                 if (parseInt(val.cartTotal)>0 )
                 {
                     editcartbutton.disabled = false;
-                    var cartHref="http://georgechoy.pythonanywhere.com/"+app+"/"+ "UpdateCartLine2/" +val.cartHeaderPK;
+                    var cartHref=urlprotocol+'//'+urlheader+'/'+app+"/"+ "UpdateCartLine2/" +val.cartHeaderPK;
                     editcart.href= cartHref ;
                 }
-
             });
         },
-
       });
     });
 });

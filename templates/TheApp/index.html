@@ -1,6 +1,50 @@
 {% extends 'TheApp/base.html' %}
+{% load static %}
 {% block body_block %}
+    <script src="{% static "js/category-ajax.js" %}"></script>
 
+        {% if cat_list %}
+		    <div id="cats">
+			    {% include 'TheApp/category_list.html' with cat_list=cat_list %}
+		    </div>
+	    {% endif %}
+	    {% if user.is_authenticated %}
+        <h1>Rango says... hello {{ user.username }}!</h1>
+        {% else %}
+        <h1>Rango says... hello world!</h1>
+        {% endif %}
+<div>
+    <h4>
+        Today's recommendations
+    </h4>
+<table id="formset" class="form">
+    {% for product in product_list %}
+      {% if forloop.first %}
+      <thead>
+            <tr>
+                <th>product</th>
+            </tr>
+      </thead>
+      {% endif %}
+         <tbody>
+            <tr class="{% cycle row1 row2 row3 %}">
+
+    <td >{{ product.name }}</td>
+    <td ><button id="Add" class="AddToCart" data-prodid="{{product.id}}" class="btn btn-primary btn-sm" type="button">Add to Cart</button></td>
+
+            </tr>
+    </tbody>
+    {% endfor %}
+</table>
+<p></p>
+</div>
+      <form id="search_categories_form_id" method="get" action="{% url 'TheApp:CategorySearchAndDisplay' %}">
+            <div class="ui-widget">
+              <label for="category">Category: </label>
+              <input type="text" id="category" name="category"/>
+              <input id="id_category_submit_button" type="submit" value="Search for categories"/>
+            </div>
+      </form>
 
                 <div>
                     {% for c in categories %}

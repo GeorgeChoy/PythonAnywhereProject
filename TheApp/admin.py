@@ -18,3 +18,5 @@ admin.site.register(CartHeader)
 admin.site.register(CartLine)
 admin.site.register(OrderProduct)
 admin.site.register(Order)
+admin.site.register(Config)
+

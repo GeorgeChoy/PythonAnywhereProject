@@ -6,9 +6,24 @@
 {% endblock %}
 
 {% block body_block %}
+    <table id="formset" class="form">
+        {% for f in film_list %}
+          {% if forloop.first %}
+          <thead>
+                <tr>
+                    <th>Film Name</th>
+                    <th>Film Genre</th>
+                </tr>
+          </thead>
+          {% endif %}
+             <tbody>
+                <tr class="{% cycle row1 row2 row3 %}">
 
-    {% for f in film_list %}
-    <p>{{ f.name }} {{ f.slug }} {{ f.genre }}</p>
+        <td >{{f.name}}</td>
+        <td >{{f.genre}} </td>
+                </tr>
+        </tbody>
+        {% endfor %}
+    </table>
 
-    {% endfor %}
 {% endblock %}

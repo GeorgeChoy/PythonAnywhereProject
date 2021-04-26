@@ -142,6 +142,7 @@ class ProductStockForm(ModelForm):
     class Meta:
         model = ProductStock
         exclude = ()
+
 #over ride the has_changed method to return True by default if you want the form's default values to be saved without user update.
     def has_changed(self):
         return True
@@ -182,22 +183,44 @@ class ProductPriceMinQtyPromotionForm(ModelForm):
     def has_changed(self):
         return True
 
-    #def clean_min_order_qty(self):
     def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data
+
+    def clean_end_date(self):
+        cleaned_data = super().clean()
+        start_date = cleaned_data.get("start_date")
+        end_date = cleaned_data.get("end_date")
+
+        if end_date <= start_date  :
+            raise ValidationError("End date must be after start date")
+        else:
+            return  end_date
+
+    def clean_min_order_qty(self):
         print("clean_min_order_qty")
-        #cleaned_data=super(ProductPriceMinQtyPromotionForm,self).clean()
         cleaned_data=super().clean()
         min_order_qty = cleaned_data.get("min_order_qty")
         price = cleaned_data.get("price")
-        start_date = cleaned_data.get("start_date")
-        end_date = cleaned_data.get("end_date")
-        print("clean_min_order_qty+"+str(min_order_qty)+" "+str(price))
-        if min_order_qty <= 0 and price > 0:
+        if min_order_qty <= 0.0 and price > 0:
             raise ValidationError("minimum quantity must not be zero when price is above zero")
-        else:
-            if end_date <= start_date  :
-                raise ValidationError("End date must be after start date")
-        return cleaned_data
+        return min_order_qty
+
+    #def clean(self):
+    #    print("clean()")
+    #    #cleaned_data=super(ProductPriceMinQtyPromotionForm,self).clean()
+    #    cleaned_data=super().clean()
+    #    min_order_qty = cleaned_data.get("min_order_qty")
+    #    price = cleaned_data.get("price")
+    #    start_date = cleaned_data.get("start_date")
+    #    end_date = cleaned_data.get("end_date")
+    #    print("clean_min_order_qty+"+str(min_order_qty)+" "+str(price))
+    #    if min_order_qty <= 0 and price > 0:
+    #        raise ValidationError("minimum quantity must not be zero when price is above zero")
+    #    else:
+    #        if end_date <= start_date:
+    #            raise ValidationError("End date must be after start date")
+    #    return cleaned_data
 
 class CartHeaderForm(ModelForm):
     class Meta:
@@ -253,7 +276,7 @@ class CustomInlineFormSet(BaseInlineFormSet):
 ProductPriceMinQtyPromotionFormSet = inlineformset_factory(Product, ProductPriceMinQtyPromotion,
                                             fields = ['product', 'price','min_order_qty','start_date','end_date'],
                                             widgets=ProductPriceWidgets,
-                                            exclude = [], can_delete = True,extra=1,
+                                            exclude = [], can_delete = True,extra=0,
                                             form=ProductPriceMinQtyPromotionForm)
 
 
@@ -264,7 +287,7 @@ ProductPriceFormSet2 = inlineformset_factory( Product,ProductPrice,
                                             fields = ['product','price', 'start_date', 'end_date'],
                                             exclude = [],
                                             widgets=ProductPriceWidgets,
-                                            can_delete=True,extra=1,
+                                            can_delete=True,extra=0,
                                             )
 
 #class AlbumForm(ModelForm):
@@ -280,4 +303,67 @@ ProductPriceFormSet2 = inlineformset_factory( Product,ProductPrice,
 #                                    widgets={'create_date':forms.DateInput(attrs={'type': 'date'}),
 #                                            },
 #                                    exclude = [], can_delete = True,extra=2)
+
+class ConfigForm(ModelForm):
+    class Meta:
+        model = Config
+        fields = ('name','detail',)
+
+class OrderForm(ModelForm):
+    class Meta:
+        model = Order
+        fields = ['create_date']
+
+    def __init__(self, *args, **kwargs):
+        super(OrderForm, self).__init__(*args, **kwargs)
+        instance = getattr(self, 'instance', None)
+        if instance and instance.id:
+            self.fields['create_date'].required = False
+            self.fields['create_date'].widget.attrs['disabled'] = 'disabled'
+
+class OrderProductForm(ModelForm):
+    class Meta:
+        model = OrderProduct
+        exclude = ()
+
+    def __init__(self, *args, **kwargs):
+        super(OrderProductForm, self).__init__(*args, **kwargs)
+        instance = getattr(self, 'instance', None)
+        if instance and instance.id:
+            self.fields['product'].required = False
+            self.fields['product'].widget.attrs['disabled'] = 'disabled'
+
+    def clean_product(self):
+        # As shown in the above answer.
+        instance = getattr(self, 'instance', None)
+        if instance:
+            return instance.product
+        else:
+            return self.cleaned_data.get('product', None)
+
+OrderProductFormset = inlineformset_factory(Order, OrderProduct, fields = ['product', 'order_qty','order_product_price'],
+                                            extra=0,
+                                            form=OrderProductForm,
+                                            exclude = [], can_delete = True
+                                            )
+
+def populate_TOPBAR_OPTION_CHOICES():
+    TOPBAR_OPTION_CHOICES = []
+    topbar_list = Config.objects.get(name='Topbar')
+    detail = topbar_list.detail
+    detail_list=detail.splitlines()
+    for ut1 in detail_list:
+        TOPBAR_OPTION_CHOICES.append((ut1,ut1))
+    return TOPBAR_OPTION_CHOICES
+
+class MenuItemsForm(ModelForm):
+    topbar_CHOICES = []
+    topbar_CHOICES=populate_TOPBAR_OPTION_CHOICES()
+
+    topbar_option=forms.CharField(label='topbar option', widget=forms.Select(choices=topbar_CHOICES))
+    class Meta:
+        model = MenuItems
+        fields = ('name','url','authenticated_only','topbar_option')
+
+MenuItemsFormSet = modelformset_factory(MenuItems,MenuItemsForm,extra=1, can_delete = True)
 

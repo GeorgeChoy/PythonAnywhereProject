@@ -1,0 +1,11 @@
+{% extends 'TheApp/base.html' %}
+{% block body_block %}
+<h1>Message detail</h1>
+
+<div>
+    <h3>Message number {{object.pk}} Create date {{object.date}} user: {{object.name}} email: {{object.email}}</h3>
+    <p>{{object.text}}</p>
+
+</div>
+
+{% endblock %}

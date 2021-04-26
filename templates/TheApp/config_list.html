@@ -1,32 +1,19 @@
 {% extends 'TheApp/base.html' %}
-{% load static %}
-
-{% block title_block %}
-    Product list
-{% endblock %}
-
 {% block body_block %}
-<script type="text/javascript" src="{% static 'js/AddToCart.js' %}"></script>
-<table id="formset" class="form">
-    {% for product in product_list %}
-      {% if forloop.first %}
-      <thead>
-            <tr>
-                <th>product</th>
-            </tr>
-      </thead>
-      {% endif %}
-         <tbody>
-            <tr class="{% cycle row1 row2 row3 %}">
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Config List</title>
+</head>
+<body>
+<h1>Config list</h1>
 
-    <td >{{ product.name }}</td>
-    <td ><button id="Add" class="AddToCart" data-prodid="{{product.id}}" class="btn btn-primary btn-sm" type="button">Add to Cart</button></td>
-
-            </tr>
-    </tbody>
+<div>
+    {% for c in config_list %}
+        <p><a href="{% url 'TheApp:UpdateConfig' c.slug %}">{{ c.name }} </a></p>
     {% endfor %}
-</table>
 
+</div>
     {# .... **Now the pagination section** .... #}
 
     <div class="pagination">
@@ -47,3 +34,4 @@
         </span>
     </div>
 {% endblock %}
+</body>

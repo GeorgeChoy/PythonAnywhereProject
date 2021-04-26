@@ -7,14 +7,26 @@
 
 {% block body_block %}
 <script type="text/javascript" src="{% static 'js/product_like.js' %}"></script>
-
-
+<table id="formset" class="form">
     {% for product in product_list %}
-    <p >{{ product.name }}
-    <button id="likes" class="likes" data-prodid="{{product.id}}" class="btn btn-primary btn-sm" type="button">like</button>
-    <span id="like_count{{product.id}}" style="white-space: nowrap">{{ product.likes }}</span> people like this product
-    </p>
+      {% if forloop.first %}
+      <thead>
+            <tr>
+                <th>product</th>
+                <th>no of likes</th>
+            </tr>
+      </thead>
+      {% endif %}
+        <tbody>
+        <tr class="{% cycle row1 row2 row3 %}">
+            <td >{{ product.name }}</td>
+        <td ><span id="like_count{{product.id}}" style="white-space: nowrap">{{ product.likes }}</span> </td>
+        <td ><button id="likes" class="likes" data-prodid="{{product.id}}" class="btn btn-primary btn-sm" type="button">like</button></td>
+        <td ><button id="EditPrice" class="btn btn-primary btn-sm" onclick="location.href='{% url 'TheApp:ProductStockPriceUpdate3' product.pk %}'" type="button">Edit Price & Qty</button></td>
+        </tr>
+        </tbody>
     {% endfor %}
+</table>
 
     {# .... **Now the pagination section** .... #}
 

@@ -1,6 +1,5 @@
 $(document).ready(function(){
     var TargetWord = document.getElementById("myfilm").innerText;
-    alert(TargetWord);
     var TargetWordArray = TargetWord.split('');
     var EndWord=$('#demo').val();
     var ResultArray = EndWord.split('');

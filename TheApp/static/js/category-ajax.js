@@ -1,8 +1,16 @@
 $(document).ready(function(){
-$(function() {
-  $("#categories").autocomplete({
-    source: "/TheApp/category_autocomplete/",
-    minLength: 2,
-  });
-});
+              $(function() {
+                $("#category").autocomplete({
+                  source: "/TheApp/autocompleteCategory/",
+                  select: function (event, ui) { //item selected
+                    AutoCompleteSelectHandler(event, ui)
+                  },
+                  minLength: 2,
+                });
+              });
+
+              function AutoCompleteSelectHandler(event, ui)
+              {
+                var selectedObj = ui.item;
+              }
 });

@@ -1,0 +1,146 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Create/Update product, stock levels and price
+{% endblock %}
+
+{% block body_block %}
+    {% for p in Product %}
+            <font size="+1"><b> name: </b></font>{{ p.name }}
+            <font size="+1"><b> category: </b></font>{{ p.category }}
+            <font size="+1"><b> likes: </b></font>{{ p.likes }}
+    {% endfor %}
+        <p></p>
+
+<form method="post" action="" enctype="multipart/form-data">
+         {% csrf_token %}
+
+	  {{ qty_formset.management_form  }}
+<div id="form_set">
+<table id="formset" class="form">
+    {% for f in qty_formset.forms %}
+  {% if forloop.first %}
+      <thead><tr>
+          <tr class="{% cycle row1 row2 row3 row4%}">
+        {% for field in f.visible_fields %}
+        <th>{{ field.label|capfirst }}</th>
+        {% endfor %}
+      </tr></thead>
+      {% endif %}
+      <tr class="{% cycle row1 row2 row3%}">
+      {% for field in f.visible_fields %}
+        <td>
+        {# Include the hidden fields in the form #}
+        {% if forloop.first %}
+          {% for hidden in f.hidden_fields %}
+          {{ hidden }}
+          {% endfor %}
+        {% endif %}
+          {{ field.errors.as_ul }}
+          {{ field }}
+        </td>
+      {% endfor %}
+      </tr>
+
+    {% endfor %}
+</table>
+</div>
+
+<h4>Pricing record update</h4>
+	  {{ price_formset.management_form  }}
+<div id="price_form_set">
+<table id="price_formset" class="form">
+    {% for f in price_formset.forms %}
+
+      <tr class="{% cycle row1 row2 row3%}">
+      {% for field in f.visible_fields %}
+        <td>
+        {# Include the hidden fields in the form #}
+        {% if forloop.first %}
+          {% for hidden in f.hidden_fields %}
+          {{ hidden }}
+          {% endfor %}
+        {% endif %}
+          {{ field.label|capfirst }}
+          {{ field.errors.as_ul }}
+          {{ field }}
+        </td>
+      {% endfor %}
+      </tr>
+
+    {% endfor %}
+</table>
+</div>
+<h4>Minimum quantity price record update</h4>
+
+	  {{ MinQty_formset.management_form  }}
+<div id="MinQty_form_set">
+<table id="minqty_formset" class="form">
+    {% for f in MinQty_formset.forms %}
+
+      <tr class="{% cycle row1 row2 row3%}">
+      {% for field in f.visible_fields %}
+        <td>
+        {# Include the hidden fields in the form #}
+        {% if forloop.first %}
+          {% for hidden in f.hidden_fields %}
+          {{ hidden }}
+          {% endfor %}
+        {% endif %}
+          {{ field.label|capfirst }}
+          {{ field.errors.as_ul }}
+          {{ field }}
+        </td>
+      {% endfor %}
+      </tr>
+
+    {% endfor %}
+</table>
+</div>
+
+<input type="button" value="Add More product prices" id="add_more_product_price">
+<input type="button" value="Add More product min qty prices" id="add_more_product_min_qty_price">
+<div id="empty_form" style="display:none">
+{{ price_formset.empty_form }}
+        <table class='no_error'>
+
+        </table>
+
+</div>
+
+<div id="MinQty_empty_form" style="display:none">
+    {{ MinQty_formset.empty_form.as_table }}
+    <table class='no_error'>
+
+    </table>
+</div>
+        <input type="submit"/>
+    </form>
+<script>
+    $('#add_more_product_price').click(function() {
+        var form_idx = $('#id_productprice_set-TOTAL_FORMS').val();
+        var str1 = "id_productprice_set-";
+        var n=parseInt(form_idx) ;
+        str1=str1.concat(n.toString());
+        str1=str1.concat("-price");
+        $('#price_form_set').append($('#empty_form').html().replace(/__prefix__/g, form_idx));
+        //document.getElementById(str1).value = 0.00;
+        $('#id_productprice_set-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+        console.log($('#id_productprice_set-TOTAL_FORMS').val());
+        $('#id_productprice_set-MAX_NUM_FORMS').val(1000);
+    });
+
+    $('#add_more_product_min_qty_price').click(function() {
+        form_idx = $('#id_productpriceminqtypromotion_set-TOTAL_FORMS').val();
+        var str1 =    "id_productpriceminqtypromotion_set-";
+        var n=parseInt(form_idx) ;
+        str1=str1.concat(n.toString());
+        str1=str1.concat("-price");
+        $('#MinQty_form_set').append($('#MinQty_empty_form').html().replace(/__prefix__/g, form_idx));
+        $('#id_productpriceminqtypromotion_set-TOTAL_FORMS').val(parseInt(form_idx) + 1);
+        $('#id_productpriceminqtypromotion_set-MAX_NUM_FORMS').val(1000);
+    });
+</script>
+
+{% endblock %}

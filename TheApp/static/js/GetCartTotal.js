@@ -1,5 +1,6 @@
 $( document ).ready(function() {
-
+        var urlprotocol=String(window.location.protocol);
+        var urlheader=String(window.location.host);
         $.get('/TheApp/GetCartTotal/', {}, function(data){
                     var cartTotal = parseInt(data);
                     const button=document.getElementById("editcart")
@@ -26,7 +27,7 @@ $( document ).ready(function() {
                 if (parseInt(val.cartTotal)>0 )
                 {
                     editcartbutton.disabled = false;
-                    var cartHref="http://georgechoy.pythonanywhere.com/"+app+"/"+ "UpdateCartLine2/" +val.cartHeaderPK;
+                    var cartHref=urlprotocol+'//'+urlheader+'/'+app+"/"+ "UpdateCartLine2/" +val.cartHeaderPK;
                     editcart.href= cartHref ;
                 }
 

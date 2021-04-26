@@ -1,0 +1,30 @@
+{% extends 'TheApp/base.html' %}
+{% block body_block %}
+<h1>Order detail</h1>
+
+<div>
+    <h3>Order number {{object.pk}} Create date {{object.create_date}}</h3>
+
+<table>
+    {% for o in OrderProduct %}
+      {% if forloop.first %}
+  <tr>
+    <th>product</th>
+      <th>    </th>
+    <th>order qty</th>
+      <th>    </th>
+    <th>product price</th>
+  </tr>
+    {% endif %}
+<tr>
+    <td>{{ o.product }}</td>
+    <td>    </td>
+    <td>{{ o.order_qty }}</td>
+    <td>    </td>
+    <td>{{o.order_product_price}}</td>
+</tr>
+    {% endfor %}
+</table>
+</div>
+
+{% endblock %}
