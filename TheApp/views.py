@@ -4,7 +4,7 @@ from .forms import *
 from .serializers import *
 from .enigma import *
 from django.views.generic.edit import CreateView, UpdateView, DeleteView,FormView
-from django.views.generic import ListView,DetailView
+from django.views.generic import ListView,DetailView,TemplateView
 from django.template import RequestContext
 from django.views.decorators.csrf import csrf_exempt
 from django.http import JsonResponse
@@ -368,29 +368,55 @@ def enigma_result(request,input='',config='',result=''):
     context_dict={'input':input,'config':config,'result':result}
     return render(request, 'TheApp/enigma_result.html', context=context_dict)
 
-def enigma_non_single_page(request):
-    context={}
-    try:
-        context['config'] = Config.objects.get(name='enigma_non_single_page')
-    except:
-        context['config'] = {'detail': 'a'}
+def call_enigma(request,input_text,Config):
+    ConfigUpper = Config.upper()
+    outstring=enigma(request, input_text, ConfigUpper)
+    return enigma_result(request, input_text, Config, outstring)
 
-    if request.method == 'POST':
-        form = InputForm(request.POST)
-        form_valid_flag=form.is_valid()
-        if form_valid_flag:
-            regex = re.compile('[^a-zA-Z]')
-            input_text=regex.sub('', form.data['input_text'])
-            Config=form.data['config_text']
-            ConfigUpper=Config.upper()
-            outstring= enigma(request,input_text,ConfigUpper)
-            return enigma_result(request,form.data['input_text'],Config,outstring)
+class enigma_non_single_page3(FormView):
+    template_name = 'TheApp/enigma2.html'
+    form_class = InputForm
+
+    def dispatch(self, request, *args, **kwargs):
+        return super(enigma_non_single_page3, self).dispatch(request,*args, **kwargs)
+
+    def get(self, request, *args, **kwargs):
+        input_form = InputForm(self.request.GET or None)
+        form_valid_flag = input_form.is_valid()
+        context = self.get_context_data(**kwargs)
+        context['input_form'] = input_form
+        return self.render_to_response(context)
+
+    def get_context_data(self, **kwargs):
+        context = super(enigma_non_single_page3, self).get_context_data(**kwargs)
+        if self.request.POST:
+            context['input_form'] = InputForm(self.request.POST)
         else:
-            print("error")
-    else:
-        form = InputForm(request.POST)
-    context.update({"form":form})
-    return render(request, 'TheApp/enigma.html',context=context)
+            context['input_form'] = InputForm()
+        try:
+            context['config'] = Config.objects.get(name='enigma_non_single_page')
+        except:
+            context['config'] ={'detail':'enigma_non_single_page'}
+        return context
+
+    def get_form_kwargs(self):
+        kwargs = super(enigma_non_single_page3, self).get_form_kwargs()
+        return kwargs
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        form = context['input_form']
+        if form.is_valid():
+            print(form.cleaned_data)
+        else:
+            print("ddddddddddddddd")
+        config_text = form.cleaned_data.get('config_text')
+        ConfigUpper = config_text.upper()
+        regex = re.compile('[^a-zA-Z]')
+        input_text = regex.sub('', form.cleaned_data.get('input_text'))
+        # get the current namespace to use if the "save and add another was clicked"
+        outstring = enigma(self.request, input_text, ConfigUpper)
+        return enigma_result(self.request, input_text, Config, outstring)
 
 def EnigmaJson(request):
     config = ""

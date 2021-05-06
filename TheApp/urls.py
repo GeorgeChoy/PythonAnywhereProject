@@ -32,7 +32,7 @@ urlpatterns=[
     url(r'^FilmGenreListView/$', FilmGenreListView.as_view(),name='FilmGenreListView'),
     url(r'^FilmListView/$', FilmListView.as_view(),name='FilmListView'),
     url(r'^CreateLanguage/$', CreateLanguage.as_view(),name='CreateLanguage'),
-    url(r'^enigma_non_single_page/$', views.enigma_non_single_page, name='enigma_non_single_page'),
+    url(r'^enigma_non_single_page3/$', enigma_non_single_page3.as_view(),name='enigma_non_single_page3'),
     url(r'^EnigmaJson/$', views.EnigmaJson),
     url(r'^enigma_single_page/$', views.enigma_single_page,name='enigma_single_page'),
     url(r'^mastermind/$', views.mastermind,name='mastermind'),

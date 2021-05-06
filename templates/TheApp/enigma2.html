@@ -9,7 +9,7 @@
 <form action="." method="post">
     {% csrf_token %}
 
-{{ form }}
+{{ input_form.as_ul }}
 <input type="submit" id="submit" >submit  </input>
 </form>
 
