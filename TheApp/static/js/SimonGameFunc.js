@@ -15,8 +15,8 @@ function updateClickResult(inId,inResultArray,inSeqArray,ingameCounter,inRightWr
     if (ingameCounter>=5)
     {
         DisableButton();
-        inResultArray.unshift("Sequence: ");
-        document.getElementById("answer").innerHTML = inResultArray;
+        inSeqArray.unshift("Sequence: ");
+        document.getElementById("answer").innerHTML = inSeqArray;
         if (! inRightWrongArray.includes("incorrect"))
             {alert("congratulations");}
         else
