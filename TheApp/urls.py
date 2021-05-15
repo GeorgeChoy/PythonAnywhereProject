@@ -70,4 +70,5 @@ urlpatterns=[
     url(r'^MessageDetail/(?P<pk>\d+)/$', MessageDetail.as_view(),name='MessageDetail'),
     url(r'^ListMessage/$', ListMessage.as_view(), name='ListMessage'),
     url(r'^Category_list_react/$', views.Category_list_react,name='Category_list_react'),
+    url(r'^SimonGame/$', views.SimonGame, name='SimonGame'),
 ]

@@ -1,0 +1,23 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Memory game
+
+{% endblock %}
+
+{% block body_block %}
+
+<script src="{% static "js/ButtonCreater.js" %}"></script>
+<script src="{% static "js/SimonGameButtonClick.js" %}"></script>
+<script src="{% static "js/SimonGameFunc.js" %}"></script>
+<script src="{% static "js/SimonGameStart.js" %}"></script>
+<script src="{% static "js/SimonGameStartButton.js" %}"></script>
+<script src="{% static "js/SimonGameDisableButton.js" %}"></script>
+<script src="{% static "js/SimonGameEnableButton.js" %}"></script>
+<div id="container"></div>
+<input type="button" value="start game" id="start_game">
+<div id="result"></div>
+<div id="RightWrong"></div>
+<div id="answer"></div>
+{% endblock %}

@@ -2,7 +2,7 @@
 {% load static %}
 {% block body_block %}
     <script src="{% static "js/category-ajax.js" %}"></script>
-
+<script type="text/javascript" src="{% static 'js/AddToCart.js' %}"></script>
         {% if cat_list %}
 		    <div id="cats">
 			    {% include 'TheApp/category_list.html' with cat_list=cat_list %}

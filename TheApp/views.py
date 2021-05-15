@@ -1235,3 +1235,10 @@ def Category_list_react(request):
     context_dict={}
     return render(request, 'TheApp/Category_list_react.html', context=context_dict)
 
+def SimonGame(request):
+    context={}
+    try:
+        context['config'] = Config.objects.get(name='SimonGame')
+    except:
+        context['config'] = {'detail': 'SimonGame'}
+    return render(request, 'TheApp/SimonGame.html', context=context)
