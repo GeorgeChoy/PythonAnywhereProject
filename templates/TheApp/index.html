@@ -30,6 +30,7 @@
             <tr class="{% cycle row1 row2 row3 %}">
 
     <td >{{ product.name }}</td>
+    <td><input type="number" value="1" id="{{product.id}}"  style="width: 4em" min="0" step="1"/></td>
     <td ><button id="Add" class="AddToCart" data-prodid="{{product.id}}" class="btn btn-primary btn-sm" type="button">Add to Cart</button></td>
 
             </tr>

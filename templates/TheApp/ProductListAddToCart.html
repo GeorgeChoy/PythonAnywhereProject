@@ -7,12 +7,14 @@
 
 {% block body_block %}
 <script type="text/javascript" src="{% static 'js/AddToCart.js' %}"></script>
+
 <table id="formset" class="form">
     {% for product in product_list %}
       {% if forloop.first %}
       <thead>
             <tr>
                 <th>product</th>
+                <th>Qty</th>
             </tr>
       </thead>
       {% endif %}
@@ -20,8 +22,8 @@
             <tr class="{% cycle row1 row2 row3 %}">
 
     <td >{{ product.name }}</td>
+    <td><input type="number" value="1" id="{{product.id}}"  style="width: 4em" min="0" step="1"/></td>
     <td ><button id="Add" class="AddToCart" data-prodid="{{product.id}}" class="btn btn-primary btn-sm" type="button">Add to Cart</button></td>
-
             </tr>
     </tbody>
     {% endfor %}

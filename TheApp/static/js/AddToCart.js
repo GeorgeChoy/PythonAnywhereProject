@@ -6,11 +6,12 @@ $( document ).ready(function() {
     $('.AddToCart').click(function(){
         var prodid;
         prodid = $(this).attr("data-prodid");
+        QTY = document.getElementById(prodid).value;
         $('#editcartbutton').prop('disabled', false);
 
         $.ajax({
         url: '/TheApp/AddToCart/',
-        data:{product_id: prodid},
+        data:{product_id: prodid,qty: QTY},
         dataType: 'json',
         type : 'GET',
 

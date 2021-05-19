@@ -753,7 +753,7 @@ class ProductStockPriceUpdate2(LoginRequiredMixin,UpdateView):
 
 class ProductStockPriceUpdate3(LoginRequiredMixin,UpdateView):
     model = Product
-    success_url = '/TheApp/ProductList'
+    success_url = '/TheApp/ProductListReadOnly'
     #    fields = '__all__'
     form_class = ProductStockFormSet
     template_name = 'TheApp/ProductStockPriceMinQtyCreate2.html'
@@ -881,9 +881,9 @@ class ProductListAddToCart(ProductListReadOnly):
 def AddToCart(request):
     prod_id = ""
     user_id=None
-    print("gg")
     if request.method == 'GET':
         prod_id = request.GET['product_id']
+        qty = request.GET['qty']
         if request.user.is_authenticated:
             user_id = request.user
 
@@ -914,6 +914,8 @@ def AddToCart(request):
             pass
         else:
             CL=CartLine(cartheader=CH,product=prod,order_qty=1)
+            CL.order_product_price=GetBestPrice(prod, qty)
+            CL.order_qty=qty
             CL.save()
 
         mi_json = {}
@@ -1242,3 +1244,21 @@ def SimonGame(request):
     except:
         context['config'] = {'detail': 'SimonGame'}
     return render(request, 'TheApp/SimonGame.html', context=context)
+
+def GetBestPrice(inProduct,inQty):
+    today = datetime.now().date()
+    tomorrow = today + timedelta(1)
+    today_start = datetime.combine(today, time())
+    today_end = datetime.combine(tomorrow, time())
+    print(inProduct.pk)
+    ###how to get records with today's date on models vvvvvvvv
+    try:
+        QtyMin = ProductPriceMinQtyPromotion.objects.filter(start_date__lte=today_end, end_date__gte=today_start,product=inProduct,min_order_qty__lte=inQty).order_by('-price').first()
+        return QtyMin.price
+    except:
+        try:
+            ProdPrice = ProductPrice.objects.get(start_date__lte=today_end, end_date__gte=today_start,product=inProduct)
+            return ProdPrice.price
+        except:
+            pass
+        return 0
