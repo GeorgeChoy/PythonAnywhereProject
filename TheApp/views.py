@@ -1262,3 +1262,64 @@ def GetBestPrice(inProduct,inQty):
         except:
             pass
         return 0
+
+class OrderEdit(UpdateView):
+    model = Order
+    success_url = '/TheApp/OrderListView'
+    form_class=OrderHeaderForm
+    template_name = 'TheApp/OrderEdit.html'
+
+#When you want to default a date field on a form, use date.today() for today, for yesterday or tomorrow add/substract timedelta(days=1)
+#This should be in the dictionary in the list that the initial argument uses.
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderEdit, self).get_context_data(**kwargs)
+        try:
+            context['config'] = Config.objects.get(name='OrderEdit')
+        except:
+            context['config'] ={'detail':''}
+        if self.request.POST:
+            context['order_line_formset'] = OrderProductFormset(self.request.POST, instance=self.object)
+            #context['order_line_formset'].full_clean()
+        else:
+            context['order_line_formset'] = OrderProductFormset( instance=self.object)
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        return super(OrderEdit, self).dispatch(request,*args, **kwargs)
+
+    def form_valid(self, form):
+        context = self.get_context_data()
+        order_line_formset = context['order_line_formset']
+        print(order_line_formset.is_valid())
+        if order_line_formset.is_valid() :
+            self.object = form.save()
+            order_line_formset.instance = self.object
+            order_line_formset.save()
+            return redirect(self.success_url)
+        else:
+            return self.render_to_response(self.get_context_data(form=form))
+
+class OrderHeaderEdit(UpdateView):
+    model = Order
+    success_url = '/TheApp/OrderListView'
+    #    fields = '__all__'
+    form_class = OrderHeaderForm
+    template_name = 'TheApp/OrderHeaderEdit.html'
+
+    def get_context_data(self, **kwargs):
+        context = super(OrderHeaderEdit, self).get_context_data(**kwargs)
+        context['Order'] = Order.objects.get(pk=self.object.pk)
+        try:
+            context['config'] = Config.objects.get(name='OrderHeaderEdit')
+        except:
+            context['config'] = {'detail': 'OrderHeaderEdit'}
+
+        if self.request.POST:
+            context['order_header'] = OrderHeaderForm(self.request.POST, instance=self.object)
+        else:
+            context['order_header'] = OrderHeaderForm(instance=self.object)
+        return context
+
+    def dispatch(self, request, *args, **kwargs):
+        return super(OrderHeaderEdit, self).dispatch(request,*args, **kwargs)

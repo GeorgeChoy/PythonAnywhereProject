@@ -1,0 +1,16 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Edit Order Header
+{% endblock %}
+
+{% block body_block %}
+<form action="" method="post">
+    {% csrf_token %}
+<div >
+    {{ form.as_ul }}
+    </div>
+<input type="submit" value="OK">
+</form>
+{% endblock %}

@@ -1,0 +1,50 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Edit Order
+{% endblock %}
+
+{% block body_block %}
+    {% for o in Order %}
+            <font size="+1"><b> Order create date: </b></font>{{ o.create_date }}
+    {% endfor %}
+
+<form method="post" action="" enctype="multipart/form-data">
+         {% csrf_token %}
+
+{{ form.as_ul }}
+    {{ order_line_formset.management_form  }}
+<div id="form_set">
+<table id="formset" class="form">
+    {% for f in order_line_formset.forms %}
+  {% if forloop.first %}
+      <thead><tr>
+          <tr class="{% cycle row1 row2 row3 row4%}">
+        {% for field in f.visible_fields %}
+        <th>{{ field.label|capfirst }}</th>
+        {% endfor %}
+      </tr></thead>
+      {% endif %}
+      <tr class="{% cycle row1 row2 row3%}">
+      {% for field in f.visible_fields %}
+        <td>
+        {# Include the hidden fields in the form #}
+        {% if forloop.first %}
+          {% for hidden in f.hidden_fields %}
+          {{ hidden }}
+          {% endfor %}
+        {% endif %}
+          {{ field.errors.as_ul }}
+          {{ field }}
+        </td>
+      {% endfor %}
+      </tr>
+
+    {% endfor %}
+</table>
+</div>
+
+        <input type="submit"/>
+    </form>
+{% endblock %}

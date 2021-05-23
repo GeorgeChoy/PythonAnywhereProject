@@ -142,7 +142,6 @@ class Order(models.Model):
     create_date=models.DateField(default=timezone.now)
     delivery_date=models.DateField(null=True)
 
-
 class OrderProduct(models.Model):
     order= models.ForeignKey(Order, on_delete=models.CASCADE)
     product=models.ForeignKey(Product, on_delete=models.CASCADE)

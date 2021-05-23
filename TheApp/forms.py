@@ -1,6 +1,8 @@
 from django import forms
 from .models import  *
-from django.forms import formset_factory,ModelForm, inlineformset_factory,BaseFormSet,CheckboxInput,modelformset_factory,BaseInlineFormSet,DecimalField
+from django.forms import formset_factory,ModelForm, inlineformset_factory,BaseFormSet,CheckboxInput,\
+    modelformset_factory,BaseInlineFormSet,DecimalField
+from django.forms.widgets import DateInput
 from django.core.exceptions import ValidationError
 from django.utils import timezone
 from datetime import date,datetime
@@ -261,6 +263,36 @@ CartLineFormset = inlineformset_factory(CartHeader, CartLine, fields = ['product
                                             exclude = [], can_delete = True
                                             )
 
+OrderDeliveryDateWidget={
+                        'delivery_date':forms.DateInput(attrs={'type': 'date','class':'datepicker'}),
+                    }
+
+
+class OrderHeaderForm(ModelForm):
+    class Meta:
+        model = Order
+        fields = ['delivery_date']
+        widgets = {
+            'delivery_date': DateInput(attrs={'type': 'date'}),
+        }
+
+    def __init__(self, *args, **kwargs):
+        super(OrderHeaderForm, self).__init__(*args, **kwargs)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data
+
+    def clean_delivery_date(self):
+        cleaned_data = super().clean()
+        delivery_date = cleaned_data.get("delivery_date")
+
+        today = datetime.now().date()
+        if delivery_date <= today  :
+            raise ValidationError("Delivery date must be after today")
+        else:
+            return delivery_date
+
 class CustomInlineFormSet(BaseInlineFormSet):
     def clean(self):
         super().clean()
@@ -278,8 +310,6 @@ ProductPriceMinQtyPromotionFormSet = inlineformset_factory(Product, ProductPrice
                                             widgets=ProductPriceWidgets,
                                             exclude = [], can_delete = True,extra=0,
                                             form=ProductPriceMinQtyPromotionForm)
-
-
 
 #ProductPriceFormSet2 uses form ProductPriceForm so that you can validate that start date is before end date.
 ProductPriceFormSet2 = inlineformset_factory( Product,ProductPrice,
@@ -333,6 +363,17 @@ class OrderProductForm(ModelForm):
             self.fields['product'].required = False
             self.fields['product'].widget.attrs['disabled'] = 'disabled'
 
+    def clean(self):
+        cleaned_data = super().clean()
+        return cleaned_data
+
+    def clean_order_qty(self):
+        cleaned_data = super().clean()
+        order_qty = cleaned_data.get("order_qty")
+        if order_qty <= 0:
+            raise ValidationError("order quantity must not be zero delete the line if you don't want it")
+        return order_qty
+
     def clean_product(self):
         # As shown in the above answer.
         instance = getattr(self, 'instance', None)
@@ -340,6 +381,10 @@ class OrderProductForm(ModelForm):
             return instance.product
         else:
             return self.cleaned_data.get('product', None)
+
+#over ride the has_changed method to return True by default if you want the form's default values to be saved without user update.
+    def has_changed(self):
+        return True
 
 OrderProductFormset = inlineformset_factory(Order, OrderProduct, fields = ['product', 'order_qty','order_product_price'],
                                             extra=0,

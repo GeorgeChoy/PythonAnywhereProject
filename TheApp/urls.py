@@ -71,4 +71,6 @@ urlpatterns=[
     url(r'^ListMessage/$', ListMessage.as_view(), name='ListMessage'),
     url(r'^Category_list_react/$', views.Category_list_react,name='Category_list_react'),
     url(r'^SimonGame/$', views.SimonGame, name='SimonGame'),
+    url(r'^OrderEdit/(?P<pk>\d+)/$', OrderEdit.as_view(), name='OrderEdit'),
+    url(r'^OrderHeaderEdit/(?P<pk>\d+)/$', OrderHeaderEdit.as_view(), name='OrderHeaderEdit'),
 ]
