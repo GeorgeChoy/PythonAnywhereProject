@@ -10,6 +10,7 @@ urlpatterns=[
     url(r'^$',  views.index,name='index'),
     url(r'^index/$', views.index,name='index'),
     url(r'^about/$', views.about,name='about'),
+    url(r'^WackAMole/$', views.WackAMole, name='WackAMole'),
     url(r'^CreateCategory/$', CreateCategoryView.as_view(),name='CreateCategory'),
     url(r'^category/(?P<cslug>[\w\-]+)/$', views.show_category, name='show_category'),
     url(r'^UpdateCategory/(?P<slug>[\w\-]+)/$', UpdateCategory.as_view(), name='UpdateCategory'),

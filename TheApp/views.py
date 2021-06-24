@@ -60,6 +60,14 @@ def about(request):
         context_dict['config'] = {'detail': ''}
     return render(request,'TheApp/about.html',context=context_dict)
 
+def WackAMole(request):
+    context_dict={}
+    try:
+        context_dict['config'] = Config.objects.get(name='WackAMole')
+    except:
+        context_dict['config'] = {'detail': ''}
+    return render(request,'TheApp/WackAMole.html',context=context_dict)
+
 class CreateCategoryView(CreateView):
     template_name = 'TheApp/CreateCategory.html'
     form_class = CategoryForm

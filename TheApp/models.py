@@ -150,7 +150,6 @@ class OrderProduct(models.Model):
     order_product_price=models.DecimalField(default=0.00, max_digits=5, decimal_places=2)
     create_date = models.DateField(default=timezone.now)
 
-
 class CartHeader(models.Model):
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.SET_NULL, null=True)
     create_date=models.DateField(default=timezone.now)
@@ -187,3 +186,5 @@ class Config(models.Model):
         super(Config,self).save(*args,**kwargs)
     def __str__(self):
         return self.name
+
+

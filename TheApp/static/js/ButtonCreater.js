@@ -1,4 +1,3 @@
-
 function ButtonCreater() {
     for (i = 0; i < 5; i++) {
         var buttoni=document.createElement('button');
@@ -11,5 +10,6 @@ function ButtonCreater() {
         buttoni.innerHTML = i;
         container.appendChild(buttoni);
     }
-
 }
+
+
