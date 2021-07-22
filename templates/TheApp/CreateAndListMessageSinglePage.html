@@ -1,0 +1,43 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+{% block body_block %}
+<script type="text/javascript" src="{% static 'js/CreateMessageSinglePage.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/showFirst3Messages.js' %}"></script>
+<script type="text/javascript" src="{% static 'js/ShowMessage.js' %}"></script>
+<h1>Create And List message</h1>
+Message: <input type="text" id="input_text" value="">
+<label id="Lemail">Email</label> <input type="email" id="email" value=""  >
+<label id="Lname">Name</label> <input type="text" id="name" value=""  >
+
+{% if user.is_authenticated %}
+<script type="text/javascript" >
+    var x=document.getElementById("email");
+    x.setAttribute("type", "hidden");
+    x.value="a@mail.com";
+
+    var y=document.getElementById("name");
+    y.setAttribute("type", "hidden");
+    y.value="name";
+    document.getElementById("Lemail").style.display = "none";
+    document.getElementById("Lname").style.display = "none";
+
+</script>
+{% endif %}
+
+<button id="CreateMessageSinglePage" type="button">OK</button>
+<p id="output"></p>
+
+    <table id="formset" >
+          <thead>
+                <tr>
+                    <th>User</th>
+                    <th>Message date</th>
+                    <th>Message </th>
+                </tr>
+          </thead>
+             <tbody  >
+
+
+        </tbody>
+    </table>
+{% endblock %}
