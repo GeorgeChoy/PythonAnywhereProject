@@ -289,6 +289,13 @@ def category_list_read_only(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
+@api_view(['GET'])
+def message_list_read_only(request):
+    if request.method == 'GET':
+        messages = Message.objects.all().order_by('-pk')[:3]
+        serializer = MessageSerializer(messages, many=True)
+        return Response(serializer.data)
+
 def get_menuitems(request):
     auth_flag=False
     if request.user.is_authenticated:
@@ -524,6 +531,38 @@ class CreateMessage(CreateView):
     success_url = '/TheApp/'
     template_name = "TheApp/CreateMessage.html"
     form_class = MessageForm
+
+def CreateAndListMessageSinglePage(request):
+    context_dict={}
+    try:
+        context_dict['config'] = Config.objects.get(name='CreateAndListMessageSinglePage')
+    except:
+        context_dict['config'] = {'detail': ''}
+    return render(request,'TheApp/CreateAndListMessageSinglePage.html',context=context_dict)
+
+def CreateMessageSinglePageJson(request):
+    input_text=""
+    email=""
+    user_id=0
+    user_name=""
+    if request.user.is_authenticated:
+        user_name = request.user.get_username()
+        email=request.user.email
+        user_id=request.user.id
+    else:
+        if request.method == 'GET':
+            email = request.GET['email']
+            user_name = request.GET['name']
+
+    if request.method == 'GET':
+        input_text=request.GET['input_text']
+        m = Message(name=user_name,userPk=user_id, email=email,text=input_text)
+        m.save()
+
+    print(user_name)
+    #message = Message.objects.create_book("Pride and Prejudice")
+
+    return HttpResponse(user_id)
 
 Login_Redirect_URL='/TheApp/user_login_call'
 
@@ -1331,3 +1370,11 @@ class OrderHeaderEdit(UpdateView):
 
     def dispatch(self, request, *args, **kwargs):
         return super(OrderHeaderEdit, self).dispatch(request,*args, **kwargs)
+
+def NoughtsAndCrosses(request):
+    context={}
+    try:
+        context['config'] = Config.objects.get(name='NoughtsAndCrosses')
+    except:
+        context['config'] = {'detail': 'NoughtsAndCrosses'}
+    return render(request, 'TheApp/NoughtsAndCrosses.html', context=context)
