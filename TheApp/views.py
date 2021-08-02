@@ -1378,3 +1378,11 @@ def NoughtsAndCrosses(request):
     except:
         context['config'] = {'detail': 'NoughtsAndCrosses'}
     return render(request, 'TheApp/NoughtsAndCrosses.html', context=context)
+
+def NoughtsAndCrosses1Player(request):
+    context={}
+    try:
+        context['config'] = Config.objects.get(name='NoughtsAndCrosses1Player')
+    except:
+        context['config'] = {'detail': 'NoughtsAndCrosses1Player'}
+    return render(request, 'TheApp/NoughtsAndCrosses1Player.html', context=context)

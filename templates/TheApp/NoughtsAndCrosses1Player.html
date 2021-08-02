@@ -2,16 +2,16 @@
 {% load static %}
 
 {% block title_block %}
-    Noughts and crosses game
+    Noughts and crosses single player game
 
 {% endblock %}
 
 {% block body_block %}
 
 <script src="{% static "js/ButtonCreaterDynamic.js" %}"></script>
-<script src="{% static "js/NoughtsAndCrossesStart.js" %}"></script>
-<script src="{% static "js/checkNeighbours.js" %}"></script>
+<script src="{% static "js/NC1Player.js" %}"></script>
 <script src="{% static "js/NCCheckResult.js" %}"></script>
+<script src="{% static "js/checkNeighbours.js" %}"></script>
 <div id="container"></div>
 <div id="result"></div>
 <div id="RightWrong"></div>

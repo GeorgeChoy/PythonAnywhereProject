@@ -78,4 +78,5 @@ urlpatterns=[
     url(r'^OrderEdit/(?P<pk>\d+)/$', OrderEdit.as_view(), name='OrderEdit'),
     url(r'^OrderHeaderEdit/(?P<pk>\d+)/$', OrderHeaderEdit.as_view(), name='OrderHeaderEdit'),
     url(r'^NoughtsAndCrosses/$', views.NoughtsAndCrosses,name='NoughtsAndCrosses'),
+    url(r'^NoughtsAndCrosses1Player/$', views.NoughtsAndCrosses1Player, name='NoughtsAndCrosses1Player'),
 ]

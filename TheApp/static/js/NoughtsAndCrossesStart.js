@@ -6,7 +6,8 @@ $( document ).ready(function(elem) {
     var elems = document.querySelectorAll('.btn-styled');
 
     for (var i=elems.length; i--;) {
-        elems[i].addEventListener('click', fn, false);
+        //elems[i].addEventListener('click', fn, false);
+        elems[i].addEventListener('click',function (e){var singleplayerflag=true; ProcessClick(connectionCombos,this.id,false);} , false);
     }
 
     function fn() {
