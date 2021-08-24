@@ -1,0 +1,28 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Connection 4
+{% endblock %}
+
+{% block body_block %}
+
+<script src="{% static "js/ButtonCreaterDynamic.js" %}"></script>
+<script src="{% static "js/Connect4Start.js" %}"></script>
+<script src="{% static "js/checkNeighbours.js" %}"></script>
+<script src="{% static "js/NCCheckResult.js" %}"></script>
+<script src="{% static "js/Connect4CheckResult.js" %}"></script>
+<script src="{% static "js/C4Combos.js" %}"></script>
+<script src="{% static "js/C4_2player.js" %}"></script>
+<link rel="stylesheet" href="{% static 'css/C4.css' %}">
+
+<form class=c4-form>
+<div id="PieceContainer"></div>
+<div id="container"></div>
+
+</form>
+
+<div id="result"></div>
+<div id="RightWrong"></div>
+<div id="answer"></div>
+{% endblock %}

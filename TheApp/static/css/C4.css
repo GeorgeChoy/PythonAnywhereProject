@@ -1,0 +1,21 @@
+.c4-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 20rem;
+  padding: 1em;
+}
+
+.input_styled {
+ background-color: #FFFFFF; /* Green */
+ width:44px;
+}
+
+.btn-styled {
+ background-color: #4CAF50; /* Green */
+ width:44px;
+}
+
+form.c4-form * {
+  box-sizing: border-box;
+}

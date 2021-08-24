@@ -68,6 +68,22 @@ def WackAMole(request):
         context_dict['config'] = {'detail': ''}
     return render(request,'TheApp/WackAMole.html',context=context_dict)
 
+def Connect4(request):
+    context_dict={}
+    try:
+        context_dict['config'] = Config.objects.get(name='Connect4')
+    except:
+        context_dict['config'] = {'detail': ''}
+    return render(request,'TheApp/Connect4.html',context=context_dict)
+
+def Connect4_2player(request):
+    context_dict={}
+    try:
+        context_dict['config'] = Config.objects.get(name='Connect4_2player')
+    except:
+        context_dict['config'] = {'detail': ''}
+    return render(request,'TheApp/Connect4_2player.html',context=context_dict)
+
 class CreateCategoryView(CreateView):
     template_name = 'TheApp/CreateCategory.html'
     form_class = CategoryForm
