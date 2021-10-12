@@ -1,0 +1,27 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+
+{% block title_block %}
+    Battleships
+{% endblock %}
+
+{% block body_block %}
+<script src="{% static "js/ButtonCreaterDynamic.js" %}"></script>
+<script src="{% static "js/BattleshipsStart.js" %}"></script>
+<script src="{% static "js/BattleshipsDragDropAW.js" %}"></script>
+<script src="{% static "js/BattleshipsDragDrop.js" %}"></script>
+<link rel="stylesheet" href="{% static 'css/Battleships.css' %}">
+<script type="text/javascript">
+    DJANGO_STATIC_URL = '{% static "" %}';
+</script>
+
+<div id="super">
+    <div id="div1"></div>
+    <div id="div2"></div>
+</div>
+<button id="button1">start</button>
+
+<div id="result"></div>
+<div id="RightWrong"></div>
+<div id="answer"></div>
+{% endblock %}
