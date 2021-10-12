@@ -60,6 +60,14 @@ def about(request):
         context_dict['config'] = {'detail': ''}
     return render(request,'TheApp/about.html',context=context_dict)
 
+def Battleships(request):
+    context_dict={}
+    try:
+        context_dict['config'] = Config.objects.get(name='Battleships')
+    except:
+        context_dict['config'] = {'detail': ''}
+    return render(request,'TheApp/Battleships.html',context=context_dict)
+
 def WackAMole(request):
     context_dict={}
     try:
