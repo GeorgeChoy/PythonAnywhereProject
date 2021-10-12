@@ -81,4 +81,5 @@ urlpatterns=[
     url(r'^NoughtsAndCrosses1Player/$', views.NoughtsAndCrosses1Player, name='NoughtsAndCrosses1Player'),
     url(r'^Connect4/$', views.Connect4, name='Connect4'),
     url(r'^Connect4_2player/$', views.Connect4_2player, name='Connect4_2player'),
+    url(r'^Battleships/$', views.Battleships, name='Battleships'),
 ]
