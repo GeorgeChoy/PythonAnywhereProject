@@ -68,6 +68,7 @@ def Battleships(request):
         context_dict['config'] = {'detail': ''}
     return render(request,'TheApp/Battleships.html',context=context_dict)
 
+
 def WackAMole(request):
     context_dict={}
     try:
