@@ -133,7 +133,7 @@ function DisableEnableUserButtons(inClass,inStatus)
 //No of CPU blocks covered
 var CpuBlocksCovered=0;
 
-function processClick(InId,inCPU_grid,InGameOverFlag,InImageWidth,InImageHeight)
+function processClick(InId,inCPU_grid,InGameOverFlag,InImageWidth,InImageHeight,InHitSound)
 {
     if (CpuBlocksCovered>=(InImageWidth*InImageHeight))
     {
@@ -148,6 +148,7 @@ function processClick(InId,inCPU_grid,InGameOverFlag,InImageWidth,InImageHeight)
     if( inCPU_grid[numb]['ShipInCell'] == true)
     {
         document.getElementById(InId).style.background='#FF0000';
+        InHitSound.play();
         CpuBlocksCovered++;
     }
     /*if(typeof inCPU_grid[numb][1][0] === 'undefined') {
@@ -308,7 +309,7 @@ function SetClickedOnNonPossibleCells(InUserArray,InCPUSelection,InImageWidth,In
 var UserBlocksCovered=0;
 
 function processCPUselection(InUserArray,InNumberOfCells,InIDPrefix,InUserShipFound,
-ImageWidth,ImageHeight,InNumberRows,InNumberColumns,InFirstUserCellFound,InEndPointsArray,InGameOverFlag)
+ImageWidth,ImageHeight,InNumberRows,InNumberColumns,InFirstUserCellFound,InEndPointsArray,InGameOverFlag,InHitSound)
 {
     //Function to process the CPU selection of a cell to find the user's ship
     //
@@ -358,6 +359,7 @@ ImageWidth,ImageHeight,InNumberRows,InNumberColumns,InFirstUserCellFound,InEndPo
         document.getElementById(MyGridID).style.background='#FF0000';
         document.getElementById(MyGridID).disabled=true;
         console.log('InUserShipFound '.concat(InUserShipFound));
+        InHitSound.play();
         UserBlocksCovered++;
         if(InUserShipFound==false)
         {
