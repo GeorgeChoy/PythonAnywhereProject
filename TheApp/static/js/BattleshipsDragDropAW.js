@@ -21,6 +21,9 @@ $( "#drag2" ).draggable({
   containment: "parent"
 });
 
+var mysoundHit=new Audio(DJANGO_STATIC_URL.concat('sounds/expl05.wav'));
+var mysoundFire=new Audio(DJANGO_STATIC_URL.concat('sounds/eksplosjon.wav'));
+
 //var el1 = document.getElementById('toggle2');
 //    el2 = document.getElementById('drag1');
 var CPU_Grid=[];
@@ -41,7 +44,8 @@ var InGameOverFlag=false;
 var EndPointsArray=setUpRowEndPoints(13,12);
 for (var i=buttonsList.length; i--;) {
     buttonsList[i].addEventListener('click',function (e){
-        processClickReturnArray=processClick(this.id,CPU_Grid,InGameOverFlag,4,4);
+        mysoundFire.play();
+        processClickReturnArray=processClick(this.id,CPU_Grid,InGameOverFlag,4,4,mysoundHit);
         CPU_Grid=processClickReturnArray[0];
         GameOverFlag=processClickReturnArray[1];
         if(GameOverFlag==true)
@@ -49,7 +53,7 @@ for (var i=buttonsList.length; i--;) {
             DisableEnableUserButtons('myGuessClass',true);
         }
         var processCPUselectionReturnArray=[];
-        processCPUselectionReturnArray=processCPUselection(MyGrid,156,'toggle',InUserShipFound,4,4,13,12,FirstUserCell,EndPointsArray,GameOverFlag);
+        processCPUselectionReturnArray=processCPUselection(MyGrid,156,'toggle',InUserShipFound,4,4,13,12,FirstUserCell,EndPointsArray,GameOverFlag,mysoundHit);
         MyGrid=processCPUselectionReturnArray[0];
         InUserShipFound=processCPUselectionReturnArray[1];
         FirstUserCell=processCPUselectionReturnArray[2];
