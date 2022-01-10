@@ -5,7 +5,6 @@ app_name='TheApp'
 from django.conf.urls.static import static
 from django.conf import settings
 
-
 urlpatterns=[
     url(r'^$',  views.index,name='index'),
     url(r'^index/$', views.index,name='index'),
@@ -27,6 +26,10 @@ urlpatterns=[
     url(r'^category_list/$', views.category_list, name='category_list'),
     url(r'^category_list_read_only/$', views.category_list_read_only, name='category_list_read_only'),
     url(r'^message_list_read_only/$', views.message_list_read_only, name='message_list_read_only'),
+    url(r'^product_list/(?P<pname>[\w\-]+)/$', views.product_list, name='product_list'),
+    url(r'^product_list_all/$', views.product_list_all, name='product_list_all'),
+    url(r'^SingleProductView/(?P<pk>\d+)/$', SingleProductView.as_view(),name='SingleProductView'),
+
     url(r'^get_menuitems/$', views.get_menuitems, name='get_menuitems'),
     url(r'^CreateFilm/$', CreateFilm.as_view(),name='CreateFilm'),
     url(r'^UpdateFilm/(?P<slug>[\w\-]+)/$', UpdateFilm.as_view(),name='UpdateFilm'),
