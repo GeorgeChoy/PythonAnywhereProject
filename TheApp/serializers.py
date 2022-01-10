@@ -1,5 +1,5 @@
 from rest_framework import serializers
-from .models import Category,Message
+from .models import Category,Message,Product
 from django.contrib.auth.models import User, Group
 
 class CategorySerializer(serializers.ModelSerializer):
@@ -21,3 +21,10 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ('name','text','date')
+
+class ProductSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Product
+        fields = ('name','category','likes','user','pk')
+
+
