@@ -18,7 +18,7 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status,filters
-from rest_framework.generics import ListCreateAPIView,ListAPIView
+from rest_framework.generics import ListCreateAPIView,ListAPIView,RetrieveAPIView
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import datetime, timedelta, time,date
@@ -320,6 +320,37 @@ def message_list_read_only(request):
         messages = Message.objects.all().order_by('-pk')[:3]
         serializer = MessageSerializer(messages, many=True)
         return Response(serializer.data)
+
+#Product list in rest format
+@api_view(['GET', 'POST'])
+def product_list(request,pname):
+    if request.method == 'GET':
+        products = Product.objects.all().filter(name__startswith=pname)
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = ProductSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+@api_view(['GET', 'POST'])
+def product_list_all(request):
+    if request.method == 'GET':
+        products = Product.objects.all()
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
+    elif request.method == 'POST':
+        serializer = ProductSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+class SingleProductView(RetrieveAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
 
 def get_menuitems(request):
     auth_flag=False
