@@ -29,6 +29,7 @@ urlpatterns=[
     url(r'^product_list/(?P<pname>[\w\-]+)/$', views.product_list, name='product_list'),
     url(r'^product_list_all/$', views.product_list_all, name='product_list_all'),
     url(r'^SingleProductView/(?P<pk>\d+)/$', SingleProductView.as_view(),name='SingleProductView'),
+    url(r'^enter_message_rest/$', views.enter_message_rest, name='enter_message_rest'),
 
     url(r'^get_menuitems/$', views.get_menuitems, name='get_menuitems'),
     url(r'^CreateFilm/$', CreateFilm.as_view(),name='CreateFilm'),
@@ -85,4 +86,6 @@ urlpatterns=[
     url(r'^Connect4/$', views.Connect4, name='Connect4'),
     url(r'^Connect4_2player/$', views.Connect4_2player, name='Connect4_2player'),
     url(r'^Battleships/$', views.Battleships, name='Battleships'),
+    url(r'^CategoryListReact/$', views.CategoryListReact, name='CategoryListReact'),
+    url(r'^EnterMessageReact/$', views.EnterMessageReact, name='EnterMessageReact'),
 ]
