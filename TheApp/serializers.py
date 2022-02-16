@@ -17,14 +17,17 @@ class GroupSerializer(serializers.HyperlinkedModelSerializer):
         model = Group
         fields = ['url', 'name']
 
-class MessageSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Message
-        fields = ('name','text','date')
+#class MessageSerializer(serializers.ModelSerializer):
+#    class Meta:
+#        model = Message
+#        fields = ('name','text','date')
 
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
         fields = ('name','category','likes','user','pk')
 
-
+class MessageSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Message
+        fields = ('name','date','text','email','pk')
