@@ -27,6 +27,8 @@ from django.contrib.sessions.backends.db import SessionStore
 import json
 import re
 import random
+from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 
 # Create your views here.
 def index(request):
@@ -157,6 +159,20 @@ def autocompleteCategory(request):
     data = 'fail'
   mimetype = 'application/json'
   return HttpResponse(data, mimetype)
+
+def CategoryListReact(request):
+#display a list of the categories using django rest framework and React json
+    context_dict={}
+    return render(request, 'TheApp/CategoryListReact.html', context=context_dict)
+
+def EnterMessageReact(request):
+    context_dict={}
+    #context_dict={ 'REACT_APP_URL': settings.REACT_APP_URL}
+    try:
+        context_dict['config'] = Config.objects.get(name='EnterMessageReact')
+    except:
+        context_dict['config'] = {'detail': 'a'}
+    return render(request, 'TheApp/EnterMessageReact.html', context=context_dict)
 
 class CategorySearchAndDisplay(ListView):
     model = Category
@@ -351,6 +367,21 @@ def product_list_all(request):
 class SingleProductView(RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+@api_view(['POST'])
+def enter_message_rest(request):
+    if request.method == 'POST':
+        serializer = MessageSerializer(data=request.data)
+        if serializer.is_valid():
+            serializer.validated_data['date'] =  datetime.now().date()
+            if request.user.is_authenticated:
+                serializer.validated_data['userPk'] = request.user.id
+                serializer.validated_data['name'] = str(request.user)
+            else:
+                serializer.validated_data['userPk'] = 0
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
 
 def get_menuitems(request):
     auth_flag=False
