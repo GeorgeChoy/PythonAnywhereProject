@@ -1,0 +1,12 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+{% block body_block %}
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<h1>Category List</h1>
+
+<div id="category_container"></div>
+<script  src="{% static "js/react/Category_list_react.js" %}" type = "text/babel"></script>
+{% endblock %}
