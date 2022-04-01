@@ -88,4 +88,15 @@ urlpatterns=[
     url(r'^Battleships/$', views.Battleships, name='Battleships'),
     url(r'^CategoryListReact/$', views.CategoryListReact, name='CategoryListReact'),
     url(r'^EnterMessageReact/$', views.EnterMessageReact, name='EnterMessageReact'),
+    url(r'^React_dropdown/$', views.React_dropdown, name='React_dropdown'),
+    url(r'^ProductRetrieveUpdateItem/(?P<pk>\d+)/$', ProductRetrieveUpdateItem.as_view(),name='ProductRetrieveUpdateItem'),
+    url(r'^product_list_last3/$', views.product_list_last3, name='product_list_last3'),
+    url(r'^ProductPriceCreateList/(?P<prod>\d+)/$', ProductPriceCreateList.as_view(),name='ProductPriceCreateList'),
+    url(r'^ProductPriceUpdate/(?P<pk>\d+)/$', ProductPriceUpdate.as_view(),name='ProductPriceUpdate'),
+    url(r'^ProductPriceCreate/$', ProductPriceCreate.as_view(),name='ProductPriceCreate'),
+    url(r'^ProductPriceDelete/(?P<pk>\d+)/$', ProductPriceDelete.as_view(),name='ProductPriceDelete'),
+    url(r'^enigma_django_rest_return/(?P<config>[\w\-]+)/(?P<inputtext>[\w\-]+)/$', views.enigma_django_rest_return, name='enigma_django_rest_return'),
+
+    url(r'^React_dynamic_form/$', views.React_dynamic_form, name='React_dynamic_form'),
+    url(r'^React_enigma/$', views.React_enigma, name='React_enigma'),
 ]
