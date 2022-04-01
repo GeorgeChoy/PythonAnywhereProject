@@ -1,0 +1,14 @@
+{% extends 'TheApp/base.html' %}
+{% load static %}
+{% block body_block %}
+<script src="https://unpkg.com/react@16/umd/react.development.js"></script>
+<script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.24.0/axios.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<h1>Product Edit</h1>
+<div id="message_container"></div>
+<div id="message_container2"></div>
+
+<!--<script  src="{% static "js/react/Create_message_react.js" %}" type = "text/babel"></script>  -->
+<script  src="{% static "js/react/React_dropdown.js" %}" type = "text/babel"></script>
+{% endblock %}
