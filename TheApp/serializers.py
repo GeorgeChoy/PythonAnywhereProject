@@ -1,6 +1,7 @@
 from rest_framework import serializers
-from .models import Category,Message,Product
+from .models import Category,Message,Product,ProductPrice
 from django.contrib.auth.models import User, Group
+from django.db import migrations, models
 
 class CategorySerializer(serializers.ModelSerializer):
     class Meta:
@@ -31,3 +32,12 @@ class MessageSerializer(serializers.ModelSerializer):
     class Meta:
         model = Message
         fields = ('name','date','text','email','pk')
+
+class ProductPriceSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = ProductPrice
+        fields = ('product','price','start_date','end_date','pk')
+
+#Below is a serializer without a model for my Django Rest framework/React enigma app
+class EnigmaSerializer(serializers.Serializer):
+   result = serializers.CharField()
