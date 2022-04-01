@@ -18,7 +18,7 @@ from rest_framework import permissions
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 from rest_framework import status,filters
-from rest_framework.generics import ListCreateAPIView,ListAPIView,RetrieveAPIView
+from rest_framework.generics import ListCreateAPIView,ListAPIView,RetrieveAPIView,RetrieveUpdateAPIView,UpdateAPIView,CreateAPIView,DestroyAPIView
 from django.core.paginator import Paginator,EmptyPage,PageNotAnInteger
 from django.contrib.auth.mixins import LoginRequiredMixin
 from datetime import datetime, timedelta, time,date
@@ -367,6 +367,75 @@ def product_list_all(request):
 class SingleProductView(RetrieveAPIView):
     queryset = Product.objects.all()
     serializer_class = ProductSerializer
+
+class ProductRetrieveUpdateItem(RetrieveUpdateAPIView):
+    queryset = Product.objects.all()
+    serializer_class = ProductSerializer
+
+class ProductPriceCreateList(ListCreateAPIView):
+    serializer_class = ProductPriceSerializer
+    #queryset = ProductPrice.objects.filter(product=3)
+    def get_queryset(self):
+        return ProductPrice.objects.filter(product=self.kwargs['prod'])
+
+class ProductPriceUpdate(RetrieveUpdateAPIView):
+    queryset = ProductPrice.objects.all()
+    serializer_class = ProductPriceSerializer
+
+class ProductPriceCreate(CreateAPIView):
+    serializer_class = ProductPriceSerializer
+
+class ProductPriceDelete(DestroyAPIView):
+    serializer_class = ProductPriceSerializer
+    queryset = ProductPrice.objects.all()
+
+@api_view(['GET'])
+def product_list_last3(request):
+    if request.method == 'GET':
+        products = Product.objects.all().order_by('-pk')[:3]
+        serializer = ProductSerializer(products, many=True)
+        return Response(serializer.data)
+
+def React_dropdown(request):
+    context_dict={}
+    #context_dict={ 'REACT_APP_URL': settings.REACT_APP_URL}
+    try:
+        context_dict['config'] = Config.objects.get(name='React_dropdown')
+    except:
+        context_dict['config'] = {'detail': 'a'}
+    return render(request, 'TheApp/React_dropdown.html', context=context_dict)
+
+def React_dynamic_form(request):
+    context_dict={}
+    #context_dict={ 'REACT_APP_URL': settings.REACT_APP_URL}
+    try:
+        context_dict['config'] = Config.objects.get(name='React_dynamic_form')
+    except:
+        context_dict['config'] = {'detail': 'a'}
+    return render(request, 'TheApp/React_dynamic_form.html', context=context_dict)
+
+#call enigma functions and return the result
+@api_view(['GET'])
+def enigma_django_rest_return(request,config,inputtext):
+    if request.method == 'GET':
+        ConfigText=config.upper()
+        InputText=inputtext
+        #return Response(serializer.data)
+        #outstring=enigma(request,config,inputtext)
+        outstring=enigma(request,InputText,ConfigText)
+        yourdata ={"result": outstring}
+        serializer = EnigmaSerializer(yourdata).data
+        results = serializer
+        return Response(results)
+
+def React_enigma(request):
+    context_dict={}
+    #context_dict={ 'REACT_APP_URL': settings.REACT_APP_URL}
+    try:
+        context_dict['config'] = Config.objects.get(name='React_enigma')
+    except:
+        context_dict['config'] = {'detail': 'a'}
+    return render(request, 'TheApp/React_enigma.html', context=context_dict)
 
 @api_view(['POST'])
 def enter_message_rest(request):
