@@ -99,4 +99,5 @@ urlpatterns=[
 
     url(r'^React_dynamic_form/$', views.React_dynamic_form, name='React_dynamic_form'),
     url(r'^React_enigma/$', views.React_enigma, name='React_enigma'),
+    url(r'^Mancala/$', views.Mancala, name='Mancala'),
 ]
