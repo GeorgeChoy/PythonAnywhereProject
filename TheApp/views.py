@@ -95,6 +95,14 @@ def Connect4_2player(request):
         context_dict['config'] = {'detail': ''}
     return render(request,'TheApp/Connect4_2player.html',context=context_dict)
 
+def Mancala(request):
+    context_dict={}
+    try:
+        context_dict['config'] = Config.objects.get(name='Mancala')
+    except:
+        context_dict['config'] = {'detail': ''}
+    return render(request,'TheApp/Mancala.html',context=context_dict)
+
 class CreateCategoryView(CreateView):
     template_name = 'TheApp/CreateCategory.html'
     form_class = CategoryForm
