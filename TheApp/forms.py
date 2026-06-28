@@ -16,6 +16,7 @@ class CategoryForm(ModelForm):
 def populate_USER_TYPE_CHOICES():
     USER_TYPE_CHOICES = []
     user_type_list = user_type.objects.all()
+    #user_type_list=[]
     for ut1 in user_type_list:
         USER_TYPE_CHOICES.append((ut1.name,ut1.name))
     return USER_TYPE_CHOICES
@@ -38,6 +39,7 @@ class UserProfileForm(forms.ModelForm):
 def populate_film_genres():
     film_genre_CHOICES = []
     film_genres_list = FilmGenre.objects.all()
+    #film_genres_list=[]
     for f1 in film_genres_list:
         film_genre_CHOICES.append((f1.name,f1.name))
     return film_genre_CHOICES
@@ -45,6 +47,7 @@ def populate_film_genres():
 def populate_languages():
     language_CHOICES = []
     language_list = Language.objects.all()
+    #language_list=[]
     for f1 in language_list:
         language_CHOICES.append((f1.name,f1.name))
     return language_CHOICES

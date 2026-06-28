@@ -29,16 +29,21 @@ import re
 import random
 from django.conf import settings
 from django.views.decorators.csrf import csrf_exempt
+import feedparser
 
 # Create your views here.
 def index(request):
     context_dict={}
     category_list=Category.objects.all().order_by('pk')[3:]
     product_list=list(Product.objects.all())
+    blogger_url="https://georgechoy.blogspot.com/feeds/posts/default"
+    feed = feedparser.parse(blogger_url)
+    feed_list=list(feed.entries[:5])    
     random.shuffle(product_list)
     product_list = product_list[:6]
     context_dict={'categories': category_list}
     context_dict = {'product_list':product_list}
+    context_dict={'feed_list':feed_list}
     try:
         context_dict['config'] = Config.objects.get(name='index')
     except:

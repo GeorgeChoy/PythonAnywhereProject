@@ -52,5 +52,11 @@
                         <li><a >{{ c.name }}</a></li>
                     {% endfor %}
     </div>
+    <div>
+                <h3>Latest blog posts</h3>
+                    {% for f in feed_list %}
+                        <li><a href={{f.link}} >{{ f.title }}</a></li>
+                    {% endfor %}    
+    </div>
 
 {% endblock %}
