@@ -1,2 +1,2 @@
-
-[{"model": "TheApp.config", "pk": 0, "fields": {"name": "Topbar", "detail": "Topbar ", "slug": "Topbar"}}]
+A
+[{"model": "TheApp.config", "pk": 0, "fields": {"name": "Topbar", "detail": "Home\r\nAbout\r\nContact\r\nFilms\r\nProducts\r\nOrders\r\nGames\r\nEnigma\r\nLogin", "slug": "topbar"}}]
